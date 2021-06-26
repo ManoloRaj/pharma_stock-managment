@@ -5,4 +5,4 @@ smart managment based on database storage
 
 It work in JAVA environment :
 - Javac compilation
--JSON library in JAVA for SGBD
+- JSON library in JAVA for SGBD
