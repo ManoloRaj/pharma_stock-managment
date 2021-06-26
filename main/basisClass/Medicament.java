@@ -1,4 +1,4 @@
-package main_package;
+
 /**
 *Class that implement Medicament
  */
