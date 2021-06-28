@@ -1,4 +1,4 @@
-
+package basisClass;
 /**
 *Class that implement Medicament
  */
@@ -15,6 +15,12 @@ public class Medicament{
         this.remaining_number = 0;
         this.available = false;
     }
+    public Medicament(String name, double cost, int remaining_number, boolean available){
+        this.name = name;
+        this.cost = cost;
+        this.remaining_number = remaining_number;
+        this.available = available;
+    }
 
 
     //Getter and setter methods
@@ -27,7 +33,7 @@ public class Medicament{
     public int getRemaining_number(){
         return this.remaining_number;
     }
-    public boolean available(){
+    public boolean getAvailable(){
         return this.available;
     }
 

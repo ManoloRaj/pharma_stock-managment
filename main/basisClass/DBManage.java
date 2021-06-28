@@ -1,3 +1,5 @@
+package basisClass;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.FileWriter;
@@ -6,12 +8,8 @@ import java.io.IOException;
 /**
 * Acting on JSON database file to save all data 
  */
-
+@SuppressWarnings("unchecked")
 public class DBManage{
-
-    private JSONObject jsonObj= new JSONObject();
-
-    private FileWriter file = new FileWriter("medicament.json");
   
     private int curent_id;
 
@@ -23,12 +21,25 @@ public class DBManage{
     }
 
     public void insert_in_DB(Medicament to_insert){
-        this.jsonObj.put("ID", this.curent_id);
-        this.jsonObj.put("Name", to_insert.getName());
-        this.jsonObj.put("Cost", to_insert.getCost());
-        this.jsonObj.put("Remaining number", to_insert.getRemaining());
-        this.jsonObj.put("Available", to_insert.getAvailable());
-        this.curent_id ++;
+
+        JSONObject jsonObj= new JSONObject();
+        
+        jsonObj.put("ID", this.curent_id);
+        jsonObj.put("Name", to_insert.getName());
+        jsonObj.put("Cost", to_insert.getCost());
+        jsonObj.put("Remaining number", to_insert.getRemaining_number());
+        jsonObj.put("Available", to_insert.getAvailable());
+
+        System.out.println(jsonObj.toString());
+        try (FileWriter file = new FileWriter("database/medicament.json")) {
+            //We can write any JSONArray or JSONObject instance to the file
+            file.write(jsonObj.toString()); 
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.curent_id  = this.curent_id + 1;
     }
     //public Medicament get_from_DB(){
     //    return void;
