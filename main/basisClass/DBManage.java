@@ -41,7 +41,33 @@ public class DBManage{
         }
         this.curent_id  = this.curent_id + 1;
     }
-    //public Medicament get_from_DB(){
-    //    return void;
-    //}
+    public void get_from_DB(){
+        JSONParser parser = new JSONParser();
+
+        try {     
+            Object obj = parser.parse(new FileReader("database/medicament.json"));
+
+            JSONObject jsonObject =  (JSONObject) obj;
+
+            String ID = (String) jsonObject.get("ID");
+            System.out.println(id);
+
+            String Name = (String) jsonObject.get("Name");
+            System.out.println(Name);
+
+            String Remaining_nb = (String) jsonObject.get("Remaining number");
+            System.out.println(Remaining_nb);
+
+            String Available = (String) jsonObject.get("Available");
+            System.out.println(Available);
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return void;
+    }
 }
