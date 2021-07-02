@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,17 +17,21 @@ public class DBManage{
 
     private Medicament from_DB = new Medicament();
     
-    private JSONObject jsonObj_insert= new JSONObject();
-    
-    private JSONParser parser = new JSONParser();
-    
+    //Variable to use for insert into database
+    private JSONArray jsonArray = new JSONArray();
     private FileWriter file ;
+    
+    //Variable to use for get from database
+    private JSONParser parser = new JSONParser();
+    private FileReader file1 ;
+    
+    
 
     public DBManage() throws IOException{
         this.curent_id = 1;
         
         this.file= new FileWriter("database/medicament.json");
-        
+        this.file1 = new FileReader("database/medicament.json");
         
         System.out.println("DBManage object created successfully...");
         
@@ -35,44 +40,44 @@ public class DBManage{
     @SuppressWarnings("deprecation")
 	public void insert_in_DB(Medicament to_insert) throws IOException{
 
-        this.jsonObj_insert.put("ID", this.curent_id);
-        this.jsonObj_insert.put("Name", to_insert.getName());
-        this.jsonObj_insert.put("Cost", to_insert.getCost());
-        this.jsonObj_insert.put("Remaining number", to_insert.getRemaining_number());
-        this.jsonObj_insert.put("Available", to_insert.getAvailable());
+    	JSONObject jsonObj_insert= new JSONObject();
+        jsonObj_insert.put("ID", this.curent_id);
+        jsonObj_insert.put("Name", to_insert.getName());
+        jsonObj_insert.put("Cost", to_insert.getCost());
+        jsonObj_insert.put("Remaining number", to_insert.getRemaining_number());
+        jsonObj_insert.put("Available", to_insert.getAvailable());
 
-        System.out.println(jsonObj_insert.toJSONString());
+        this.jsonArray.add(jsonObj_insert);
 
-        //We can write any JSONArray or JSONObject instance to the file
-        this.file.write(this.jsonObj_insert.toJSONString()+"\n"); 
-        this.file.flush();
-        
         curent_id = curent_id + 1;
         
     }
+    public void upload() throws IOException {
+    	this.file.write(this.jsonArray.toJSONString());
+    	this.file.flush();
+    }
     
     
-    
-    
-    public void get_from_DB() throws FileNotFoundException, IOException, ParseException{
-
-            Object obj = parser.parse(new FileReader("database/medicament.json"));
-
-            JSONObject jsonObject =  new JSONObject();
-
-            String ID = (String) jsonObject.get("ID");
-            System.out.println(ID);
-
-            String Name = (String) jsonObject.get("Name");
-            System.out.println(Name);
-
-            String Remaining_nb = (String) jsonObject.get("Remaining number");
-            System.out.println(Remaining_nb);
-
-            String Available = (String) jsonObject.get("Available");
-            System.out.println(Available);
-        
+    public void get_from_DB() throws IOException, ParseException {
+    	Object obj = this.parser.parse(file1);
+    	JSONArray list = (JSONArray) obj;
+    	
+    	list.forEach( emp -> parseInfoObject( (JSONObject) emp ) );
    
     }
+
+	private void parseInfoObject(JSONObject emp) {
+		// TODO Auto-generated method stub
+		JSONObject object = (JSONObject) emp;
+        
+        //Get employee first name
+        String Name = (String) object.get("Name");    
+        System.out.println(Name);
+         
+        //Get employee last name
+        Double Cost = (Double) object.get("Cost");  
+        System.out.println(Cost);
+         
+	}
     
 }

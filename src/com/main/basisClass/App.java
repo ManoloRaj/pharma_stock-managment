@@ -18,9 +18,11 @@ public class App {
 	      
 	      db_manager.insert_in_DB(paracetamol);
 	      db_manager.insert_in_DB(amoxicillin);
+	      db_manager.insert_in_DB(amoxicillin);
 	      
 	      System.out.println("\n");
 	      
+	      db_manager.upload();
 	      db_manager.get_from_DB();
 	}
 
