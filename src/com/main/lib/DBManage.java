@@ -58,6 +58,7 @@ public class DBManage{
     }
     
     
+    //Function for get element in database
     public void get_from_DB() throws IOException, ParseException {
     	Object obj = this.parser.parse(file1);
     	JSONArray list = (JSONArray) obj;
