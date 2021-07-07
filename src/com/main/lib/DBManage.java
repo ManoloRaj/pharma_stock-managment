@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,9 +16,13 @@ public class DBManage{
 	  
     private int curent_id;
 
-    private Medicament from_DB = new Medicament();
+    private ArrayList <Medicament> data_from_DB =new ArrayList();
     
-    //Variable to use for insert into database
+    public ArrayList<Medicament> getDataFrom_DB() {
+		return data_from_DB;
+	}
+
+	//Variable to use for insert into database
     private JSONArray jsonArray = new JSONArray();
     private FileWriter file ;
     
@@ -59,26 +64,40 @@ public class DBManage{
     
     
     //Function for get element in database
-    public void get_from_DB() throws IOException, ParseException {
+    public void loadFromDB() throws IOException, ParseException {
     	Object obj = this.parser.parse(file1);
     	JSONArray list = (JSONArray) obj;
     	
     	list.forEach( emp -> parseInfoObject( (JSONObject) emp ) );
-   
+    	
     }
 
 	private void parseInfoObject(JSONObject emp) {
+		
+		
 		// TODO Auto-generated method stub
 		JSONObject object = (JSONObject) emp;
         
-        //Get employee first name
-        String Name = (String) object.get("Name");    
-        System.out.println(Name);
-         
-        //Get employee last name
-        Double Cost = (Double) object.get("Cost");  
-        System.out.println(Cost);
-         
+		int ID =  (int)(long)object.get("ID");  
+        //System.out.println(ID);
+        
+		String name = (String) object.get("Name");    
+        //System.out.println(name);
+        
+        Double cost = (Double) object.get("Cost");  
+        //System.out.println(cost);
+        
+        int remaining_number =  (int)(long)object.get("Remaining number");  
+        //System.out.println(remaining_number);
+        
+        boolean available =  (boolean) object.get("Available");    
+        //System.out.println(available);
+        
+        System.out.println("\n");
+        
+        this.data_from_DB.add(new Medicament(name, cost, remaining_number,available));
 	}
+	
+	
     
 }

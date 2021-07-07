@@ -23,7 +23,11 @@ public class App {
 	      System.out.println("\n");
 	      
 	      db_manager.upload();
-	      db_manager.get_from_DB();
+	      
+	      //Load all data from database
+	      db_manager.loadFromDB();
+	      
+	      System.out.println(db_manager.getDataFrom_DB().get(0).getAvailable());
 	}
 
 }
